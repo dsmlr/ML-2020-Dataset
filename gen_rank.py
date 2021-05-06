@@ -2,6 +2,8 @@ from zipfile import ZipFile
 from glob import glob
 from purity import purity_score
 from datetime import datetime
+from sklearn.metrics import normalized_mutual_info_score, pairwise_distances
+from sklearn.metrics.cluster import rand_score
 
 import pandas as pd
 import numpy as np
@@ -13,12 +15,16 @@ if __name__ == "__main__":
     rank_dict = {
         'name': [],
         'filename': [],
+        'purity': [],
+        'nmi': [],
+        'rand_index': [],
         'score': [],
         'note': []
     }
 
-    unzip_dir = 'submissions/outputs'
-    true_df = pd.read_csv('Stars Clustering/Stars answer.csv')
+    unzip_dir = '/home/phongsathorn/Projects/ML-2020-Dataset/submissions/outputs'
+    true_df = pd.read_csv('/home/phongsathorn/Projects/ML-2020-Dataset/Stars Clustering/Stars answer.csv')
+
     y_true = true_df['Type'].to_numpy()
 
     try:
@@ -26,7 +32,7 @@ if __name__ == "__main__":
     except FileNotFoundError:
         print(f'No {unzip_dir} directory. Creating new one..')
 
-    zip_filename = 'submissions/submission.zip'
+    zip_filename = '/home/phongsathorn/Projects/ML-2020-Dataset/submissions/submission.zip'
     with ZipFile(zip_filename, 'r') as zipObj:
         zipObj.extractall(unzip_dir)
 
@@ -34,7 +40,6 @@ if __name__ == "__main__":
     for output_dir in outputs_list:
         name_splitext = os.path.splitext(os.path.basename(output_dir))[0]
         name = name_splitext.split('_')[0]
-        # print(name)
         answer_files = glob(output_dir+'/*.csv')
 
         for answer_file in answer_files:
@@ -42,23 +47,32 @@ if __name__ == "__main__":
             last_column = answer_df.columns[-1]
             answer_df = answer_df.sort_values(by=[last_column])
 
-            # print(answer_df[answer_df.columns[-1]])
             filename = os.path.splitext(os.path.basename(answer_file))[0]
             filename = filename+".csv"
 
-            # print(filename)
             y_pred = answer_df[answer_df.columns[-1]].to_numpy()
 
             try:
-                score = purity_score(y_true, y_pred)
+                purity = purity_score(y_true, y_pred)
+                nmi = normalized_mutual_info_score(y_true, y_pred)
+                rand = rand_score(y_true, y_pred)
+
+                avg = (purity + nmi + rand) / 3
+
                 rank_dict['name'].append(name)
                 rank_dict['filename'].append(filename)
-                rank_dict['score'].append(score)
+                rank_dict['purity'].append(purity)
+                rank_dict['nmi'].append(nmi)
+                rank_dict['rand_index'].append(rand)
+                rank_dict['score'].append(avg)
                 rank_dict['note'].append('')
             except:
                 rank_dict['name'].append(name)
                 rank_dict['filename'].append(filename)
-                rank_dict['score'].append(0)
+                rank_dict['purity'].append(0)
+                rank_dict['nmi'].append(0)
+                rank_dict['rand_index'].append(0)
+                rand_dict['score'].append(0)
                 rank_dict['note'].append('Error')
 
     rank_df = pd.DataFrame(rank_dict)
@@ -76,9 +90,25 @@ if __name__ == "__main__":
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <h1 class="topic">Star Clustering Leaderboard</h1>
-    <p>Last updated: {update_datetime}</p>
+    <h1 class="topic">✨ Star Clustering Leaderboard</h1>
+    <p>🕓 Lastest update: {update_datetime}</p>
+    <p>(Update every 30 minutes, up to 5 files per submission)</p>
     {table}
+
+    <div class="learnmore">
+    <p>
+        The evaluation metric for this task is purity metric, normalized mutual information (NMI) and rand index.<br>
+        The score calculates by average all values from 3 metrics.<br>
+        <u>Learn more:</u>
+    </p>
+    <ul>
+        <li><a href="https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-clustering-1.html">https://nlp.stanford.edu/IR-book/html/htmledition/evaluation-of-clustering-1.html</a></li>
+        <li><a href="https://gist.github.com/jhumigas/010473a456462106a3720ca953b2c4e2">https://gist.github.com/jhumigas/010473a456462106a3720ca953b2c4e2</a></li>
+        <li><a href="https://towardsdatascience.com/evaluation-metrics-for-clustering-models-5dde821dd6cd">https://towardsdatascience.com/evaluation-metrics-for-clustering-models-5dde821dd6cd</a></li>
+        <li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.normalized_mutual_info_score.html">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.normalized_mutual_info_score.html</a></li>
+        <li><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.rand_score.html#sklearn.metrics.rand_score">https://scikit-learn.org/stable/modules/generated/sklearn.metrics.rand_score.html#sklearn.metrics.rand_score</a></li>
+    </ul>
+    </div>
 </body>
 </html>
     '''
@@ -90,7 +120,7 @@ if __name__ == "__main__":
         table=rank_df.to_html(classes='leaderboard', justify='left')
     )
 
-    f = open("docs/index.html", "w")
+    f = open("/home/phongsathorn/Projects/ML-2020-Dataset/docs/index.html", "w")
     f.write(html_source)
     f.close()
 
