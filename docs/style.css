@@ -1,0 +1,21 @@
+body{
+    font-family: Helvetica, Arial, sans-serif;
+    text-align: center;
+    padding: 15px;
+}
+
+.leaderboard{
+    margin: auto;
+    text-align: left;
+    border: 1px solid #000;
+    border-collapse: collapse;
+}
+
+.leaderboard th,
+.leaderboard td{
+    padding: 5px 10px;
+}
+
+.leaderboard thead tr{
+    background: #d2d2d2;
+}
