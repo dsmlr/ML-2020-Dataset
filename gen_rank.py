@@ -18,7 +18,7 @@ if __name__ == "__main__":
     }
 
     unzip_dir = 'submissions/outputs'
-    true_df = pd.read_csv('Stars Clustering/Stars_original.csv')
+    true_df = pd.read_csv('Stars Clustering/Stars answer.csv')
     y_true = true_df['Type'].to_numpy()
 
     try:
@@ -26,7 +26,7 @@ if __name__ == "__main__":
     except FileNotFoundError:
         print(f'No {unzip_dir} directory. Creating new one..')
 
-    zip_filename = 'submissions/ML-2-20-Submission - Predicted Label for ClusteringTask-7311.zip'
+    zip_filename = 'submissions/submission.zip'
     with ZipFile(zip_filename, 'r') as zipObj:
         zipObj.extractall(unzip_dir)
 
@@ -93,3 +93,5 @@ if __name__ == "__main__":
     f = open("docs/index.html", "w")
     f.write(html_source)
     f.close()
+
+    print("Generated HTML leaderboard.")
