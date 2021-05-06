@@ -2,8 +2,7 @@
 # Created by https://www.toptal.com/developers/gitignore/api/macos,linux,windows,vscode,jupyternotebooks,python
 # Edit at https://www.toptal.com/developers/gitignore?templates=macos,linux,windows,vscode,jupyternotebooks,python
 
-Stars\ Clustering/Stars_original.csv
-Stars\ Clustering/Stars 2.csv
+Stars\ Clustering/Stars\ answer.csv
 submissions
 baseline
 
