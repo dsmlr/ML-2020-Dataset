@@ -72,12 +72,16 @@ if __name__ == "__main__":
                 rank_dict['purity'].append(0)
                 rank_dict['nmi'].append(0)
                 rank_dict['rand_index'].append(0)
-                rand_dict['score'].append(0)
+                rank_dict['score'].append(0)
                 rank_dict['note'].append('Error')
 
     rank_df = pd.DataFrame(rank_dict)
     rank_df = rank_df.sort_values(by=['score'], ascending=False)
+    
     rank_df.index = np.arange(1, len(rank_df) + 1)
+    nodup_rank_df = rank_df.drop_duplicates(subset=['name'])
+    
+    print(rank_df)
     
     html_template = '''
 <!DOCTYPE html>
@@ -88,12 +92,24 @@ if __name__ == "__main__":
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Star Clustering Leaderboard</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
     <h1 class="topic">✨ Star Clustering Leaderboard</h1>
     <p>🕓 Lastest update: {update_datetime}</p>
     <p>(Update every 30 minutes, up to 5 files per submission)</p>
-    {table}
+
+    <div class="tabs-bar">
+      <button onclick="opentab('all')">All</button>
+      <button onclick="opentab('max')">Ranking</button>
+    </div>
+
+    <div id="all" class="tab" style="display:block">
+    {table_all}
+    </div>
+    <div id="max" class="tab" style="display:none">
+    {table_rank}
+    </div>
 
     <div class="learnmore">
     <p>
@@ -117,7 +133,8 @@ if __name__ == "__main__":
     dt_string = now.strftime("%d/%m/%Y %H:%M:%S")
     html_source = html_template.format(
         update_datetime=dt_string, 
-        table=rank_df.to_html(classes='leaderboard', justify='left')
+        table_all=rank_df.to_html(classes='leaderboard', justify='left'),
+        table_rank=nodup_rank_df.to_html(classes='leaderboard', justify='left')
     )
 
     f = open("/home/phongsathorn/Projects/ML-2020-Dataset/docs/index.html", "w")
