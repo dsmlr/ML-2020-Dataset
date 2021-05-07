@@ -7,11 +7,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Star Clustering Leaderboard</title>
     <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
 </head>
 <body>
     <h1 class="topic">✨ Star Clustering Leaderboard</h1>
-    <p>🕓 Lastest update: 07/05/2021 15:30:10</p>
+    <p>🕓 Lastest update: 07/05/2021 15:46:05</p>
     <p>(Update every 30 minutes, up to 5 files per submission)</p>
+
+    <div class="tabs-bar">
+      <button onclick="opentab('all')">All</button>
+      <button onclick="opentab('max')">Ranking</button>
+    </div>
+
+    <div id="all" class="tab" style="display:block">
     <table border="1" class="dataframe leaderboard">
   <thead>
     <tr style="text-align: left;">
@@ -368,6 +376,185 @@
     </tr>
   </tbody>
 </table>
+    </div>
+    <div id="max" class="tab" style="display:none">
+    <table border="1" class="dataframe leaderboard">
+  <thead>
+    <tr style="text-align: left;">
+      <th></th>
+      <th>name</th>
+      <th>filename</th>
+      <th>purity</th>
+      <th>nmi</th>
+      <th>rand_index</th>
+      <th>score</th>
+      <th>note</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>1</th>
+      <td>นางสาวปรียานุช สุภาสืบ</td>
+      <td>Clustering_61070278-61070306-61070365ver2-1-22.csv</td>
+      <td>0.790</td>
+      <td>0.487759</td>
+      <td>0.812261</td>
+      <td>0.696673</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td>นางสาวณัฐกาญจน์ ชัยยศมานนท์</td>
+      <td>Clustering_61070288-61070292-61070324v4.csv</td>
+      <td>0.590</td>
+      <td>0.396476</td>
+      <td>0.782010</td>
+      <td>0.589495</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td>นายโสภณ วงศ์ใหญ่</td>
+      <td>Clustering_61070286-61070315-61070363 (1).csv</td>
+      <td>0.600</td>
+      <td>0.379105</td>
+      <td>0.779598</td>
+      <td>0.586234</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>7</th>
+      <td>นายวิชญ์ภาส สังข์เมือง</td>
+      <td>320-326-358.csv</td>
+      <td>0.585</td>
+      <td>0.384324</td>
+      <td>0.762814</td>
+      <td>0.577379</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>8</th>
+      <td>นางสาวณัฐกานต์ ศิริพรโณ</td>
+      <td>Clustering_61070283_61070290_61070361_12.csv</td>
+      <td>0.520</td>
+      <td>0.341266</td>
+      <td>0.774774</td>
+      <td>0.545347</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>12</th>
+      <td>นายกิตติธรรม ผดุงเวียง</td>
+      <td>Clustering_61070273-61070277-61070279v4m.csv</td>
+      <td>0.505</td>
+      <td>0.336337</td>
+      <td>0.711357</td>
+      <td>0.517565</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>15</th>
+      <td>นางสาวอิงฟ้า ภูติวรนาถ</td>
+      <td>Clustering_61070301-61070312-61070330 5.3-9.csv</td>
+      <td>0.425</td>
+      <td>0.284261</td>
+      <td>0.751206</td>
+      <td>0.486822</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>16</th>
+      <td>นายธนาวินท์ บุญถนอม</td>
+      <td>Clustering_61070298-61070304.csv</td>
+      <td>0.445</td>
+      <td>0.290148</td>
+      <td>0.699246</td>
+      <td>0.478131</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>18</th>
+      <td>นางสาวณภัทร จูกุล</td>
+      <td>Clustering_61070284-61070287-61070364-9.csv</td>
+      <td>0.415</td>
+      <td>0.255081</td>
+      <td>0.739648</td>
+      <td>0.469910</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>20</th>
+      <td>นางสาวเบญจพร เงินศรีตระกูล</td>
+      <td>Clustering_61070300-61070305-61070307 (3) (1).csv</td>
+      <td>0.375</td>
+      <td>0.213801</td>
+      <td>0.731055</td>
+      <td>0.439952</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>22</th>
+      <td>นายวีรสุต การย์บรรจบ</td>
+      <td>Clustering_61070321_61070357_61070362.csv</td>
+      <td>0.390</td>
+      <td>0.213969</td>
+      <td>0.680603</td>
+      <td>0.428191</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>23</th>
+      <td>นายณัฐวุฒิ อกนิษฐ์ศุภร</td>
+      <td>Clustering_61070285-61070296-61070319_last.csv</td>
+      <td>0.375</td>
+      <td>0.239898</td>
+      <td>0.637789</td>
+      <td>0.417562</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>25</th>
+      <td>นายไวทย์ นิรันพรพุทธา</td>
+      <td>Clustering_61070299_61070316_61070322.csv</td>
+      <td>0.305</td>
+      <td>0.159244</td>
+      <td>0.653970</td>
+      <td>0.372738</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>27</th>
+      <td>นายธนดล สร้อยสน</td>
+      <td>Clustering_61070281-61070297-61070309.csv</td>
+      <td>0.370</td>
+      <td>0.236984</td>
+      <td>0.445427</td>
+      <td>0.350804</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>28</th>
+      <td>นายอนุ ม่วงคำ</td>
+      <td>Clustering_61070291-61070318-61070327.csv</td>
+      <td>0.300</td>
+      <td>0.127093</td>
+      <td>0.621206</td>
+      <td>0.349433</td>
+      <td></td>
+    </tr>
+    <tr>
+      <th>30</th>
+      <td>นางสาวสโรชา ชำนาญไพร</td>
+      <td>Clustering_61070313-61070323_2.csv</td>
+      <td>0.300</td>
+      <td>0.032903</td>
+      <td>0.610503</td>
+      <td>0.314469</td>
+      <td></td>
+    </tr>
+  </tbody>
+</table>
+    </div>
 
     <div class="learnmore">
     <p>
